@@ -11,6 +11,8 @@ class User < ApplicationRecord
   
   validates :email, uniqueness: true
 
+  has_many :workouts, dependent: :destroy
+
   def create_tenant
     Apartment::Tenant.create(subdomain)
   end  

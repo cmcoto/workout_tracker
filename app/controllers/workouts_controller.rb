@@ -1,6 +1,6 @@
 class WorkoutsController < ApplicationController
   before_action :set_workout, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
   # GET /workouts
   # GET /workouts.json
   def index
@@ -15,6 +15,8 @@ class WorkoutsController < ApplicationController
   # GET /workouts/new
   def new
     @workout = Workout.new
+    @workout.exercises.build
+    @workout.user_id = current_user.id
   end
 
   # GET /workouts/1/edit
@@ -24,7 +26,7 @@ class WorkoutsController < ApplicationController
   # POST /workouts
   # POST /workouts.json
   def create
-    @workout = Workout.new(workout_params)
+    @workout = current_user.workouts.build(workout_params)
 
     respond_to do |format|
       if @workout.save
@@ -69,6 +71,6 @@ class WorkoutsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def workout_params
-      params.require(:workout).permit(:title, :date)
+      params.require(:workout).permit(:title, :date, exercises_attributes: [:id, :_destroy, :name, :sets, :weight])
     end
 end

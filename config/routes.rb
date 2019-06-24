@@ -3,6 +3,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   
   
+  resources :exercises
   class Subdomain
     def self.matches?(request)
       subdomains = %w{ www admin }
