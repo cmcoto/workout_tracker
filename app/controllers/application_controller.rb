@@ -18,6 +18,8 @@ class ApplicationController < ActionController::Base
     root_url(subdomain: resource_or_scope.subdomain)
   end
 
+  
+
   protected
 
     def configure_permitted_parameters
